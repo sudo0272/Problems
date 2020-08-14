@@ -8,6 +8,10 @@ public:
                                     // because the algorithm below uses nums[0]
                                     // as the standard of comparison at first loop
 
+      if (nums.size() < 2) {
+        return nums.size();
+      }
+
       for (unsigned int i = 1; i < nums.size(); i++) {
         if (nums[i - 1] != nums[i]) {
           nums[targetIndex] = nums[i];
