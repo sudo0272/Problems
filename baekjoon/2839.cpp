@@ -2,17 +2,28 @@
 
 int main() {
   unsigned int n;
-  unsigned int big = 0;
-  unsigned int small = 0;
+  int big = 0;
+  unsigned int currentWeight = 0;
 
   std::cin >> n;
 
-  while (5 * big <= n) {
+  while (currentWeight <= n) {
     big++;
+    currentWeight += 5;
   }
   big--;
+  currentWeight -= 5;
 
-  std::cout << big << std::endl;
+  while (big >= 0 && (n - currentWeight)% 3 != 0) {
+    big--;
+    currentWeight -= 5;
+  }
+
+  if (big < 0) {
+    std::cout << -1 << std::endl;
+  } else {
+    std::cout << big + (n - currentWeight) / 3 << std::endl;
+  }
 
   return 0;
 }
