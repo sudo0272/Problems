@@ -1,49 +1,51 @@
 #include <vector>
 
+int gcd(int, int);
+
 class Solution {
   public:
     void rotate(std::vector<int>& nums, int k) {
-      bool isPushed;
       int currentValue;
       int originalValue;
       unsigned int currentIndex;
-      int temp;
+      int iMax = gcd(nums.size(), k);
       int steps = k % nums.size();
 
-      if (steps != 0) {
-        isPushed = nums.size() % steps ? false : true;
-      } else {
-        return;
-      }
+      for (unsigned int i = 0; i < iMax; i++) {
+        currentIndex = i;
+        currentValue = nums[i];
+        do {
+          currentIndex += steps;
 
-      if (isPushed) {
-        nums.push_back(0); // dump
-      }
+          if (currentIndex > nums.size() - 1) {
+            currentIndex -= nums.size();
+          }
 
-      currentIndex = 0;
-      currentValue = nums[0];
-      do {
-        currentIndex += steps;
-
-        if (currentIndex > nums.size() - 1) {
-          currentIndex -= nums.size();
-        }
-
-        originalValue = nums[currentIndex];
-        nums[currentIndex] = currentValue;
-        currentValue = originalValue;
-      } while (currentIndex != 0);
-      
-      if (isPushed) {
-        for (unsigned int i = steps - 1; i >= 1; i--) {
-          nums[i] = nums[i - 1];
-        }
-
-        nums[0] = nums[nums.size() - 1];
-
-        nums.pop_back();
+          originalValue = nums[currentIndex];
+          nums[currentIndex] = currentValue;
+          currentValue = originalValue;
+        } while (currentIndex != i);
       }
     }
 };
 
+int gcd(int n, int m) {
+  int a, b, c;
+
+  if (n > m) {
+    a = n;
+    b = m;
+  } else {
+    a = m;
+    b = n;
+  }
+
+  do {
+    c = a % b;
+    a = b;
+    b = c;
+  } while (c != 0);
+
+  return a;
+}
 
