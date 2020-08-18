@@ -6,7 +6,6 @@ class Solution {
   public:
     void rotate(std::vector<int>& nums, int k) {
       int currentValue;
-      int originalValue;
       unsigned int currentIndex;
       int iMax = gcd(nums.size(), k);
       int steps = k % nums.size();
@@ -21,9 +20,11 @@ class Solution {
             currentIndex -= nums.size();
           }
 
-          originalValue = nums[currentIndex];
-          nums[currentIndex] = currentValue;
-          currentValue = originalValue;
+          if (nums[currentIndex] != currentValue) {
+            nums[currentIndex] ^= currentValue;
+            currentValue ^= nums[currentIndex];
+            nums[currentIndex] ^= currentValue;
+          }
         } while (currentIndex != i);
       }
     }
