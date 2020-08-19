@@ -1,15 +1,13 @@
-#include <map>
 #include <vector>
+#include <algorithm>
 
 class Solution {
 public:
     bool containsDuplicate(std::vector<int>& nums) {
-      std::map<int, bool> appearance;
+      std::sort(nums.begin(), nums.end());
 
-      for (int i: nums) {
-        if (appearance.find(i) == appearance.end()) {
-          appearance.insert(std::pair<int, bool>(i, true));
-        } else {
+      for (unsigned int i = 1; i < nums.size(); i++) {
+        if (nums[i] == nums[i - 1]) {
           return true;
         }
       }
