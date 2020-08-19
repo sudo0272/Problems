@@ -1,18 +1,38 @@
 #include <vector>
 #include <algorithm>
+#include <cstdlib>
+#include <cstring>
 
 class Solution {
-public:
+  public:
     bool containsDuplicate(std::vector<int>& nums) {
-      unsigned int numsSize = nums.size();
+      int maxNum;
+      int minNum;
+      unsigned int realNumsSize;
+      bool *realNums;
 
-      std::sort(nums.begin(), nums.end());
+      if (nums.size() <= 1) {
+        return false;
+      }
 
-      for (unsigned int i = 1; i < numsSize; i++) {
-        if (nums[i] == nums[i - 1]) {
+      minNum = *std::min_element(nums.begin(), nums.end()); 
+      maxNum = *std::max_element(nums.begin(), nums.end());
+      realNumsSize = maxNum - minNum + 1; 
+      realNums = new bool[realNumsSize];
+
+      memset(realNums, false, realNumsSize);
+
+      for (unsigned int i = 0; i < nums.size(); i++) {
+        if (realNums[nums[i] - minNum]) {
+          delete[] realNums;
+
           return true;
+        } else {
+          realNums[nums[i] - minNum] = true;
         }
       }
+
+      delete[] realNums;
 
       return false;
     }
