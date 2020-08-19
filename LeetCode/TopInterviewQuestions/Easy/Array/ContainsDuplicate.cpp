@@ -1,6 +1,5 @@
 #include <vector>
 #include <algorithm>
-#include <cstdlib>
 #include <cstring>
 
 class Solution {
