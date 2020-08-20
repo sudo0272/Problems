@@ -4,15 +4,13 @@
 class Solution {
   public:
     int singleNumber(std::vector<int>& nums) {
-      std::sort(nums.begin(), nums.end());
+      int result = 0;
 
-      for (unsigned int i = 1; i < nums.size(); i += 2) {
-        if (nums[i] != nums[i - 1]) {
-          return nums[i - 1];
-        }
+      for (int i: nums) {
+        result ^= i;
       }
 
-      return nums[nums.size() - 1];
+      return result;
     }
 };
 
