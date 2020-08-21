@@ -1,28 +1,31 @@
 #include <vector>
-#include <algorithm>
+#include <unordered_map>
 
 class Solution {
   public:
     std::vector<int> intersect(std::vector<int>& nums1, std::vector<int>& nums2) {
       std::vector<int> result;
-      std::vector<int>::iterator nums1Element;
-      std::vector<int>::iterator nums2Element;
+      std::vector<int> *large;
+      std::vector<int> *small;
+      std::unordered_map<int, unsigned int> numsCount;
 
-      std::sort(nums1.begin(), nums1.end());
-      std::sort(nums2.begin(), nums2.end());
+      if (nums1.size() > nums2.size()) {
+        large = &nums1;
+        small = &nums2;
+      } else {
+        large = &nums2;
+        small = &nums1;
+      }
 
-      nums1Element = nums1.begin();
-      nums2Element = nums2.begin();
+      for (auto i: *small) {
+        numsCount[i]++;
+      }
 
-      while (nums1Element != nums1.end() && nums2Element != nums2.end()) {
-        if (*nums1Element == *nums2Element) {
-          result.push_back(*nums1Element);
-          nums1Element++;
-          nums2Element++;
-        } else if (*nums1Element > *nums2Element) {
-          nums2Element++;
-        } else {
-          nums1Element++;
+      for (auto i: *large) {
+        if (numsCount[i]) { // key is not found or
+                            // value is 0, which means it has already pushed
+          result.push_back(i);
+          numsCount[i]--;
         }
       }
 
