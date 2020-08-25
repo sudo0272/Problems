@@ -1,18 +1,21 @@
-#include <string.h>
-
 int firstUniqChar(char * s){
   unsigned int alphabets[26] = {0, };
-  unsigned int i;
-  size_t sLength = strlen(s);
+  char *ch;
 
-  for (i = 0; i < sLength; i++) {
-    alphabets[s[i] - 'a']++;
+  ch = s;
+  while (*ch != '\0') {
+    alphabets[*ch - 'a']++;
+
+    ch++;
   }
 
-  for (i = 0; i < sLength; i++) {
-    if (alphabets[s[i] - 'a'] == 1) {
-      return i;
+  ch = s;
+  while (*ch != '\0') {
+    if (alphabets[*ch - 'a'] == 1) {
+      return ch - s;
     }
+
+    ch++;
   }
 
   return -1;
