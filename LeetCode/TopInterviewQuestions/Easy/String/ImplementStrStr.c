@@ -4,8 +4,8 @@
 int strStr(char *haystack, char *needle) {
   size_t haystackLength = strlen(haystack);
   size_t needleLength = strlen(needle);
-  unsigned long long haystackPartHash;
-  unsigned long long needleHash;
+  unsigned int haystackPartHash;
+  unsigned int needleHash;
   unsigned int i;
   unsigned int j;
   
@@ -21,8 +21,8 @@ int strStr(char *haystack, char *needle) {
   haystackPartHash = 0;
   needleHash = 0;
   for (i = 0; i < needleLength; i++) {
-    needleHash = (needleHash << 1) + needle[i];
-    haystackPartHash = (haystackPartHash << 1) + haystack[i];
+    needleHash += needle[i];
+    haystackPartHash += haystack[i];
   }
 
   for (i = 0; i <= haystackLength - needleLength; i++) {
@@ -38,9 +38,7 @@ int strStr(char *haystack, char *needle) {
       }
     }
 
-    haystackPartHash =
-        ((haystackPartHash - (haystack[i] << (needleLength - 1))) << 1)
-      + haystack[i + needleLength];
+    haystackPartHash = haystackPartHash - haystack[i] + haystack[i + needleLength];
   }
 
   return -1;
