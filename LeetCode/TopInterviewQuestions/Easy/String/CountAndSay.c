@@ -35,6 +35,8 @@ char * countAndSay(int n){
     }
   }
 
+  free(temp);
+
   return result;
 }
 
