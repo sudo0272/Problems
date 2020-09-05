@@ -11,7 +11,6 @@ bool isPalindrome(struct ListNode* head){
   struct ListNode *slow;
   struct ListNode *fast;
   struct ListNode *temp;
-  struct ListNode *previous;
 
   if (head == NULL || head->next == NULL) {
     return true;
@@ -30,15 +29,13 @@ bool isPalindrome(struct ListNode* head){
   }
 
   // Reverse list
-  previous = NULL;
   while (slow != NULL) {
     temp = slow->next;
-    slow->next = previous;
-    previous = slow;
+    slow->next = fast;
+    fast = slow;
     slow = temp;
   }
 
-  fast = previous;
   slow = head;
   while (fast != NULL) {
     if (slow->val != fast->val) {
