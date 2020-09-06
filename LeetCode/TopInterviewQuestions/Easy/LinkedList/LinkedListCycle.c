@@ -11,25 +11,18 @@ bool hasCycle(struct ListNode *head) {
   struct ListNode *fast;
   struct ListNode *slow;
 
-  if (head == NULL || head->next == NULL) {
-    return false;
-  }
-
   slow = head;
-  fast = head->next;
+  fast = head;
 
-  while (fast != NULL && fast != slow) {
+  while (fast && fast->next) {
     slow = slow->next;
-    fast = fast->next;
-    if (fast != NULL) {
-      fast = fast->next;
+    fast = fast->next->next;
+
+    if (fast == slow) {
+      return true;
     }
   }
 
-  if (fast == slow) {
-    return true;
-  } else {
-    return false;
-  }
+  return false;
 }
 
